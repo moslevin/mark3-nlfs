@@ -11,9 +11,9 @@
 Copyright (c) 2013 - 2018 m0slevin, all rights reserved.
 See license.txt for more information
 ===========================================================================*/
-/*!
-    \file   nlfs.h
-    \brief  Nice Little Filesystem (NLFS) - a simple, embeddable filesystem
+/**
+    @file   nlfs.h
+    @brief  Nice Little Filesystem (NLFS) - a simple, embeddable filesystem
 
     Introduction to the Nice-Little-Filesystem (NLFS)
 
@@ -111,9 +111,8 @@ See license.txt for more information
 #include "mark3cfg.h"
 #include <stdint.h>
 
-
 //---------------------------------------------------------------------------
-/*!
+/**
     Permission bit definitions
 */
 #define PERM_UX (0x0001)
@@ -145,7 +144,7 @@ namespace Mark3
 {
 class NLFS_File;
 //---------------------------------------------------------------------------
-/*!
+/**
     Enumeration describing the various types of filesystem nodes
     used by NLFS.  A fileysstem node is a fixed-sized data structure
     consisting of a type specifier, and a union of the data structures
@@ -161,7 +160,7 @@ typedef enum {
 } NLFS_Type_t;
 
 //---------------------------------------------------------------------------
-/*!
+/**
     Data structure for the "file" FS-node type.  Note that this is the same
     as for a directory node (although fewer fields are used for that case,
     as documented).
@@ -188,7 +187,7 @@ typedef struct {
 } NLFS_File_Node_t;
 
 //---------------------------------------------------------------------------
-/*!
+/**
     Data structure for the Root-configuration FS-node type
 */
 typedef struct {
@@ -206,7 +205,7 @@ typedef struct {
 } NLFS_Root_Node_t;
 
 //---------------------------------------------------------------------------
-/*!
+/**
     Filesystem node data structure.  Contains the block type, as well as
     the union between the various FS-node data structures.  This is also
     the same data format as how data is stored "on-disk"
@@ -222,7 +221,7 @@ typedef struct {
 } NLFS_Node_t;
 
 //---------------------------------------------------------------------------
-/*!
+/**
     Block data structure.  Contains the block index of the next data
     block (either in the file, or in the free-data pool), as well as any
     special flags.
@@ -239,7 +238,7 @@ typedef struct {
 } NLFS_Block_t;
 
 //---------------------------------------------------------------------------
-/*!
+/**
     Union used for managing host-specific pointers/data-types.  This is all
     pretty abstract, as the data represented here is only accessed by the
     underlying physical media drive.
@@ -252,7 +251,7 @@ typedef union {
 } NLFS_Host_t;
 
 //----------------------------------------------------------------------------
-/*!
+/**
     Structure used to report the status of a given file
 */
 typedef struct {
@@ -265,31 +264,31 @@ typedef struct {
 } NLFS_File_Stat_t;
 
 //---------------------------------------------------------------------------
-/*!
- * \brief Nice Little File System class
+/**
+ * @brief Nice Little File System class
  */
 class NLFS
 {
     friend class NLFS_File;
 
 public:
-    /*!
-     * \brief Format/Create a new filesystem with the configuration specified
+    /**
+     * @brief Format/Create a new filesystem with the configuration specified
      *        in the parameters
      *
-     * \param [in] puHost_      - Pointer to the FS storage object, interpreted
+     * @param [in] puHost_      - Pointer to the FS storage object, interpreted
      *                            by the physical medium driver.
      *
-     * \param [in] u32TotalSize_ - Total size of the object to format (in bytes)
+     * @param [in] u32TotalSize_ - Total size of the object to format (in bytes)
      *
-     * \param [in] u16NumFiles_  - Number of file nodes to create in the FS.  This
+     * @param [in] u16NumFiles_  - Number of file nodes to create in the FS.  This
      *                            parameter determines the maximum number of files
      *                            and directories that can exist simultaneously in
      *                            the filesystem.  All filesystem storage not
      *                            allocated towards file nodes is automatically
      *                            used as data-blocks.
      *
-     * \param u16DataBlockSize_  - Size of each data block (in bytes).  Setting a
+     * @param u16DataBlockSize_  - Size of each data block (in bytes).  Setting a
      *                            lower block size is a good way to avoid wasting
      *                            space in small-files due to over-allocation of
      *                            storage (size on-disk vs. actual file size).
@@ -301,282 +300,282 @@ public:
      */
     void Format(NLFS_Host_t* puHost_, uint32_t u32TotalSize_, uint16_t u16NumFiles_, uint16_t u16DataBlockSize_);
 
-    /*!
-     * \brief Re-mount a previously-cerated filesystem using this FS object.
+    /**
+     * @brief Re-mount a previously-cerated filesystem using this FS object.
      *
-     * \param [in] puHost_ - Pointer to the filesystem object
-     * \return true on success, false otherwise
+     * @param [in] puHost_ - Pointer to the filesystem object
+     * @return true on success, false otherwise
      */
     bool Mount(NLFS_Host_t* puHost_);
 
-    /*!
-     * \brief Create_File creates a new file object at the specified path
-     * \param [in] szPath_ - Path to the file to create
-     * \return ID of the created file, or INVALID_NODE if the path cannot be
+    /**
+     * @brief Create_File creates a new file object at the specified path
+     * @param [in] szPath_ - Path to the file to create
+     * @return ID of the created file, or INVALID_NODE if the path cannot be
      *         resolved, or the file already exists.
      */
     uint16_t Create_File(const char* szPath_);
 
-    /*!
-     * \brief Create_Dir creates a new directory at the specified path
-     * \param [in] szPath_ - Path to the directory to create
-     * \return ID of the created dir, or INVALID_NODE if the path cannot be
+    /**
+     * @brief Create_Dir creates a new directory at the specified path
+     * @param [in] szPath_ - Path to the directory to create
+     * @return ID of the created dir, or INVALID_NODE if the path cannot be
      *         resolved, or the file already exists.
      */
     uint16_t Create_Dir(const char* szPath_);
 
-    /*!
-     * \brief Delete_File Removes a file from disk
-     * \param szPath_ Path of the file to remove
-     * \return Index of the node deleted or INVALID_NODE on error
+    /**
+     * @brief Delete_File Removes a file from disk
+     * @param szPath_ Path of the file to remove
+     * @return Index of the node deleted or INVALID_NODE on error
      */
     uint16_t Delete_File(const char* szPath_);
 
-    /*!
-     * \brief Delete_Folder Remove a folder from disk
-     * \param szPath_ Path of the folder to remove
-     * \return Index of the node deleted or INVALID_NODE on error
+    /**
+     * @brief Delete_Folder Remove a folder from disk
+     * @param szPath_ Path of the folder to remove
+     * @return Index of the node deleted or INVALID_NODE on error
      */
     uint16_t Delete_Folder(const char* szPath_);
 
-    /*!
-     * \brief Cleanup_Node_Links Remove the links between the given node and
+    /**
+     * @brief Cleanup_Node_Links Remove the links between the given node and
      *                           its parent/peer nodes.
-     * \param u16Node_  Index of the node
-     * \param pstNode_ Pointer to a local copy of the node data
+     * @param u16Node_  Index of the node
+     * @param pstNode_ Pointer to a local copy of the node data
      */
     void Cleanup_Node_Links(uint16_t u16Node_, NLFS_Node_t* pstNode_);
 
-    /*!
-     * \brief Find_Parent_Dir returns the directory under which the specified
+    /**
+     * @brief Find_Parent_Dir returns the directory under which the specified
      *        file object lives
-     * \param [in] szPath_ - Path of the file to find parent directory node for
-     * \return directory node ID, or INVALID_NODE if the path is invalid.
+     * @param [in] szPath_ - Path of the file to find parent directory node for
+     * @return directory node ID, or INVALID_NODE if the path is invalid.
      */
     uint16_t Find_Parent_Dir(const char* szPath_);
 
-    /*!
-     * \brief Find_File returns the file node ID of the object at a given path
-     * \param [in] szPath_ - Path of the file to search for
-     * \return file node ID, or INVALID_NODE if the path is invalid.
+    /**
+     * @brief Find_File returns the file node ID of the object at a given path
+     * @param [in] szPath_ - Path of the file to search for
+     * @return file node ID, or INVALID_NODE if the path is invalid.
      */
     uint16_t Find_File(const char* szPath_);
 
-    /*!
-     * \brief Print displays a summary of files in the filesystem
+    /**
+     * @brief Print displays a summary of files in the filesystem
      */
     void Print(void);
 
-    /*!
-     * \brief GetBlockSize retrieves the data block size for the filesystem.
-     * \return The size of a data block in the filesystem, as configured at format.
+    /**
+     * @brief GetBlockSize retrieves the data block size for the filesystem.
+     * @return The size of a data block in the filesystem, as configured at format.
      */
     uint32_t GetBlockSize(void) { return m_stLocalRoot.u32BlockSize; }
-    /*!
-     * \brief GetNumBlocks retrieves the number of data blocks in the filesystem.
-     * \return The total number of blocks in the filesystem
+    /**
+     * @brief GetNumBlocks retrieves the number of data blocks in the filesystem.
+     * @return The total number of blocks in the filesystem
      */
     uint32_t GetNumBlocks(void) { return m_stLocalRoot.u32NumBlocks; }
-    /*!
-     * \brief GetNumBlocksFree retrieves the number of free data blocks in the
+    /**
+     * @brief GetNumBlocksFree retrieves the number of free data blocks in the
      *        filesystem.
-     * \return The number of available blocks in the filesystem
+     * @return The number of available blocks in the filesystem
      */
     uint32_t GetNumBlocksFree(void) { return m_stLocalRoot.u32NumBlocksFree; }
-    /*!
-     * \brief GetNumFiles retrieves the maximum number of files in the filesystem
-     * \return The maximum number of files that can be allocated in the system
+    /**
+     * @brief GetNumFiles retrieves the maximum number of files in the filesystem
+     * @return The maximum number of files that can be allocated in the system
      */
     uint32_t GetNumFiles(void) { return m_stLocalRoot.u16NumFiles; }
-    /*!
-     * \brief GetNumFilesFree retrieves the number of free blocks in the filesystem
-     * \return The number of free file nodes in the filesystem
+    /**
+     * @brief GetNumFilesFree retrieves the number of free blocks in the filesystem
+     * @return The number of free file nodes in the filesystem
      */
     uint16_t GetNumFilesFree(void) { return m_stLocalRoot.u16NumFilesFree; }
-    /*!
-     * \brief GetFirstChild Return the first child node for a node representing
+    /**
+     * @brief GetFirstChild Return the first child node for a node representing
      *                  a directory
-     * \param u16Node_   Index of a directory node
-     * \return          Node ID of the first child node or INVALID_NODE on failure
+     * @param u16Node_   Index of a directory node
+     * @return          Node ID of the first child node or INVALID_NODE on failure
      */
 
     uint16_t GetFirstChild(uint16_t u16Node_);
 
-    /*!
-     * \brief GetNextPeer   Return the Node ID of a File/Directory's next peer
-     * \param u16Node_       Node index of the current object
-     * \return              Node ID of the next peer object
+    /**
+     * @brief GetNextPeer   Return the Node ID of a File/Directory's next peer
+     * @param u16Node_       Node index of the current object
+     * @return              Node ID of the next peer object
      */
     uint16_t GetNextPeer(uint16_t u16Node_);
 
-    /*!
-     * \brief GetStat       Get the status of a file on-disk
-     * \param u16Node_       Node representing the file
-     * \param pstStat_      Pointer to the object containing the status
-     * \return true on success, false on failure
+    /**
+     * @brief GetStat       Get the status of a file on-disk
+     * @param u16Node_       Node representing the file
+     * @param pstStat_      Pointer to the object containing the status
+     * @return true on success, false on failure
      */
     bool GetStat(uint16_t u16Node_, NLFS_File_Stat_t* pstStat_);
 
 protected:
-    /*!
-     * \brief Find_Last_Slash Finds the location of the last '/' character in a
+    /**
+     * @brief Find_Last_Slash Finds the location of the last '/' character in a
      *        path.
-     * \param [in] szPath_ - String representing a '/' delimited path.
-     * \return the byte offset of the last slash char in the path.
+     * @param [in] szPath_ - String representing a '/' delimited path.
+     * @return the byte offset of the last slash char in the path.
      */
     char Find_Last_Slash(const char* szPath_);
 
-    /*!
-     * \brief File_Names_Match Determines if a given path matches the name in a
+    /**
+     * @brief File_Names_Match Determines if a given path matches the name in a
      *        file node.
-     * \param [in] szPath_ - file path to search for
-     * \param [in] pstNode_ - pointer to a fs node
-     * \return true if the filename in the path matches the filename in the node.
+     * @param [in] szPath_ - file path to search for
+     * @param [in] pstNode_ - pointer to a fs node
+     * @return true if the filename in the path matches the filename in the node.
      */
     bool File_Names_Match(const char* szPath_, NLFS_Node_t* pstNode_);
 
-    /*!
-     * \brief Read_Node is an implementation-specific method used to read a
+    /**
+     * @brief Read_Node is an implementation-specific method used to read a
      *        file node from physical storage into a local data struture.
-     * \param [in] u16Node_ - File node index
-     * \param [out] pstNode_ - Pointer to the file node object to read into
+     * @param [in] u16Node_ - File node index
+     * @param [out] pstNode_ - Pointer to the file node object to read into
      */
     virtual void Read_Node(uint16_t u16Node_, NLFS_Node_t* pstNode_) = 0;
 
-    /*!
-     * \brief Write_Node is an implementation-specific method used to write a
+    /**
+     * @brief Write_Node is an implementation-specific method used to write a
      *        file node from a local structure back to the physical storage.
-     * \param [in] u16Node_ - File node index
-     * \param [in] pstNode_ - Pointer to the file node object to write from
+     * @param [in] u16Node_ - File node index
+     * @param [in] pstNode_ - Pointer to the file node object to write from
      */
     virtual void Write_Node(uint16_t u16Node_, NLFS_Node_t* pstNode_) = 0;
 
-    /*!
-     * \brief Read_Block_Header is an implementation-specific method used to read
+    /**
+     * @brief Read_Block_Header is an implementation-specific method used to read
      *        a file block header from physical storage into a local struct.
-     * \param [in] u32Block_ - data block index
-     * \param [out] pstBlock_ - block header structure to read into
+     * @param [in] u32Block_ - data block index
+     * @param [out] pstBlock_ - block header structure to read into
      */
     virtual void Read_Block_Header(uint32_t u32Block_, NLFS_Block_t* pstBlock_) = 0;
 
-    /*!
-     * \brief Write_Block_Header is an implementation-specific method used to write
+    /**
+     * @brief Write_Block_Header is an implementation-specific method used to write
      *        a file block header back to physical storage from a local struct
-     * \param [in] u32Block_ - data block index
-     * \param [in] pstFileBlock_ - pointer to the local data structure to write from
+     * @param [in] u32Block_ - data block index
+     * @param [in] pstFileBlock_ - pointer to the local data structure to write from
      */
     virtual void Write_Block_Header(uint32_t u32Block_, NLFS_Block_t* pstFileBlock_) = 0;
 
-    /*!
-     * \brief Read_Block is an implementation-specific method used to read raw file
+    /**
+     * @brief Read_Block is an implementation-specific method used to read raw file
      *        data from physical storage into a local buffer.
      *
-     * \param [in] u32Block_ - filesystem block ID corresponding to the file
-     * \param [in] u32Offset_ - offset (in bytes) from the beginning of the block
-     * \param [out] pvData_ - output buffer to read into
-     * \param [in] u32Len_ - length of data to read (in bytes)
+     * @param [in] u32Block_ - filesystem block ID corresponding to the file
+     * @param [in] u32Offset_ - offset (in bytes) from the beginning of the block
+     * @param [out] pvData_ - output buffer to read into
+     * @param [in] u32Len_ - length of data to read (in bytes)
      */
     virtual void Read_Block(uint32_t u32Block_, uint32_t u32Offset_, void* pvData_, uint32_t u32Len_) = 0;
 
-    /*!
-     * \brief Write_Block is an implementation-specific method used to write a
+    /**
+     * @brief Write_Block is an implementation-specific method used to write a
      *        piece of file data to its data block in the underlying physical
      *        storage.
      *
-     * \param [in] u32Block_ - filesystem block ID corresponding to the file
-     * \param [in] u32Offset_ - offset (in bytes) from the beginning of the block
-     * \param [in] pvData_ - data buffer to write to disk
-     * \param [in] u32Len_ - length of data to write (in bytes)
+     * @param [in] u32Block_ - filesystem block ID corresponding to the file
+     * @param [in] u32Offset_ - offset (in bytes) from the beginning of the block
+     * @param [in] pvData_ - data buffer to write to disk
+     * @param [in] u32Len_ - length of data to write (in bytes)
      */
     virtual void Write_Block(uint32_t u32Block_, uint32_t u32Offset_, void* pvData_, uint32_t u32Len_) = 0;
 
-    /*!
-     * \brief RootSync Synchronize the filesystem config in the object back to
+    /**
+     * @brief RootSync Synchronize the filesystem config in the object back to
      *        the underlying storage mechanism.  This needs to be called to
      *        ensure that underlying storage is kept consistent when creating
      *        or deleting files.
      */
     void RootSync();
 
-    /*!
-     * \brief Repair Checks a filesystem for inconsistencies and makes repairs
+    /**
+     * @brief Repair Checks a filesystem for inconsistencies and makes repairs
      *        in order to avoid losing storage blocks.
      */
     void Repair() {}
-    /*!
-     * \brief Print_Free_Details Print details about a free node
-     * \param u16Node_ Node to print details for
+    /**
+     * @brief Print_Free_Details Print details about a free node
+     * @param u16Node_ Node to print details for
      */
     void Print_Free_Details(uint16_t u16Node_);
 
-    /*!
-     * \brief Print_File_Details displays information about a given file node
-     * \param [in] u16Node_  - file index to display details for
+    /**
+     * @brief Print_File_Details displays information about a given file node
+     * @param [in] u16Node_  - file index to display details for
      */
     void Print_File_Details(uint16_t u16Node_);
 
-    /*!
-     * \brief Print_Dir_Details displays information about a given directory node
-     * \param [in] u16Node_ - directory index to display details for
+    /**
+     * @brief Print_Dir_Details displays information about a given directory node
+     * @param [in] u16Node_ - directory index to display details for
      */
     void Print_Dir_Details(uint16_t u16Node_);
 
-    /*!
-     * \brief Print_Node_Details prints details about a node, the details differ
+    /**
+     * @brief Print_Node_Details prints details about a node, the details differ
      *        based on whether it's a file/directory/root node.
-     * \param [in] u16Node_ - node to show details for
+     * @param [in] u16Node_ - node to show details for
      */
     void Print_Node_Details(uint16_t u16Node_);
 
-    /*!
-     * \brief Push_Free_Node returns a file node back to the free node list
-     * \param [in] u16Node_  - index of the file node to push back to the free list.
+    /**
+     * @brief Push_Free_Node returns a file node back to the free node list
+     * @param [in] u16Node_  - index of the file node to push back to the free list.
      */
     void Push_Free_Node(uint16_t u16Node_);
 
-    /*!
-     * \brief Pop_Free_Node returns the first free file node in the free list
-     * \return the index of the file node popped off the free list
+    /**
+     * @brief Pop_Free_Node returns the first free file node in the free list
+     * @return the index of the file node popped off the free list
      */
     uint16_t Pop_Free_Node(void);
 
-    /*!
-     * \brief Push_Free_Block returns a file block back to the head of the free
+    /**
+     * @brief Push_Free_Block returns a file block back to the head of the free
      *        block list
-     * \param [in] u32Block_ - index of the data block to free
+     * @param [in] u32Block_ - index of the data block to free
      */
     void Push_Free_Block(uint32_t u32Block_);
 
-    /*!
-     * \brief Pop_Free_Block pops a file data block from the head of the free list
-     * \return the block index of the file node popped from the head of the free
+    /**
+     * @brief Pop_Free_Block pops a file data block from the head of the free list
+     * @return the block index of the file node popped from the head of the free
      *         block list
      */
     uint32_t Pop_Free_Block(void);
 
-    /*!
-     * \brief Append_Block_To_Node adds a file data block to the end of a file
-     * \param [in] pstFile_ - Pointer to the file node to add a block to
-     * \return Data block ID of the allocated block, or INVALID_BLOCK on failure.
+    /**
+     * @brief Append_Block_To_Node adds a file data block to the end of a file
+     * @param [in] pstFile_ - Pointer to the file node to add a block to
+     * @return Data block ID of the allocated block, or INVALID_BLOCK on failure.
      */
     uint32_t Append_Block_To_Node(NLFS_Node_t* pstFile_);
 
-    /*!
-     * \brief Create_File_i is the private method used to create a file or directory
-     * \param [in] szPath_ - Path of the file or directory to create
-     * \param [in] eType_ - Type of file to create
-     * \return File node ID of the newly created file, or INVALID_NODE on failure.
+    /**
+     * @brief Create_File_i is the private method used to create a file or directory
+     * @param [in] szPath_ - Path of the file or directory to create
+     * @param [in] eType_ - Type of file to create
+     * @return File node ID of the newly created file, or INVALID_NODE on failure.
      */
     uint16_t Create_File_i(const char* szPath_, NLFS_Type_t eType_);
 
-    /*!
-     * \brief Set_Node_Name sets the name of a file or directory node
-     * \param [in] pstFileNode_ - Pointer to a file node structure to name
-     * \param [in] szPath_ - Name for the file
+    /**
+     * @brief Set_Node_Name sets the name of a file or directory node
+     * @param [in] pstFileNode_ - Pointer to a file node structure to name
+     * @param [in] szPath_ - Name for the file
      */
     void Set_Node_Name(NLFS_Node_t* pstFileNode_, const char* szPath_);
 
     NLFS_Host_t*     m_puHost;      //!< Local, cached copy of host FS pointer
     NLFS_Root_Node_t m_stLocalRoot; //!< Local, cached copy of root
 };
-} //namespace Mark3
+} // namespace Mark3

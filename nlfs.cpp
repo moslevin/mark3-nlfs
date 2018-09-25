@@ -11,9 +11,9 @@
 Copyright (c) 2013 - 2018 m0slevin, all rights reserved.
 See license.txt for more information
 ===========================================================================*/
-/*!
-    \file   nlfs.cpp
-    \brief  Nice Little Filesystem (NLFS) implementation for Mark3
+/**
+    @file   nlfs.cpp
+    @brief  Nice Little Filesystem (NLFS) implementation for Mark3
 */
 
 #include "kerneltypes.h"
@@ -21,7 +21,8 @@ See license.txt for more information
 #include "nlfs_file.h"
 #include "memutil.h"
 #include "nlfs_config.h"
-namespace Mark3 {
+namespace Mark3
+{
 //---------------------------------------------------------------------------
 char NLFS::Find_Last_Slash(const char* szPath_)
 {
@@ -312,7 +313,8 @@ uint16_t NLFS::Find_Parent_Dir(const char* szPath_)
         if (j == FILE_NAME_LENGTH && szPath_[i] != '/') {
             DEBUG_PRINT("Directory name too long, invalid\n");
             return -1;
-        } if (szPath_[i] != '/') {
+        }
+        if (szPath_[i] != '/') {
             i++;
             continue;
         }
@@ -406,9 +408,7 @@ uint16_t NLFS::Find_File(const char* szPath_)
 void NLFS::Print(void)
 {
     uint16_t i;
-    for (i = 0; i < m_stLocalRoot.u16NumFiles; i++) {
-        Print_Node_Details(i);
-    }
+    for (i = 0; i < m_stLocalRoot.u16NumFiles; i++) { Print_Node_Details(i); }
 }
 
 //---------------------------------------------------------------------------
@@ -855,4 +855,4 @@ bool NLFS::GetStat(uint16_t u16Node_, NLFS_File_Stat_t* pstStat_)
     MemUtil::CopyMemory(pstStat_->acFileName, stTemp.stFileNode.acFileName, 16);
     return true;
 }
-} //namespace Mark3
+} // namespace Mark3

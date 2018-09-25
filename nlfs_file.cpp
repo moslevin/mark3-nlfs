@@ -11,9 +11,9 @@
 Copyright (c) 2013 - 2018 m0slevin, all rights reserved.
 See license.txt for more information
 ===========================================================================*/
-/*!
-    \file nlfs_file.cpp
-    \brief Nice Little Filesystem - File Access Class
+/**
+    @file nlfs_file.cpp
+    @brief Nice Little Filesystem - File Access Class
 */
 
 #include "kerneltypes.h"
@@ -21,7 +21,8 @@ See license.txt for more information
 #include "nlfs_file.h"
 #include "nlfs.h"
 #include "nlfs_config.h"
-namespace Mark3 {
+namespace Mark3
+{
 //----------------------------------------------------------------------------
 int NLFS_File::Open(NLFS* pclFS_, const char* szPath_, NLFS_File_Mode_t eMode_)
 {
@@ -72,7 +73,7 @@ int NLFS_File::Open(NLFS* pclFS_, const char* szPath_, NLFS_File_Mode_t eMode_)
             pclFS_->Read_Block_Header(u32Curr, &stBlock);
 
             uint32_t u32Prev = u32Curr;
-            u32Curr = stBlock.u32NextBlock;
+            u32Curr          = stBlock.u32NextBlock;
 
             pclFS_->Push_Free_Block(u32Prev);
         }
@@ -240,4 +241,4 @@ int NLFS_File::Close(void)
     m_u8Flags         = 0;
     return 0;
 }
-} //namespace Mark3
+} // namespace Mark3

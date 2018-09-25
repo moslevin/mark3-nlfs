@@ -11,9 +11,9 @@
 Copyright (c) 2013 - 2018 m0slevin, all rights reserved.
 See license.txt for more information
 ===========================================================================*/
-/*!
-    \file nlfs_config.h
-    \brief NLFS configuration parameters
+/**
+    @file nlfs_config.h
+    @brief NLFS configuration parameters
 */
 
 #pragma once
