@@ -11,9 +11,9 @@
 Copyright (c) 2013 - 2018 m0slevin, all rights reserved.
 See license.txt for more information
 ===========================================================================*/
-/*!
-    \file nlfs_file.h
-    \brief NLFS file access class
+/**
+    @file nlfs_file.h
+    @brief NLFS file access class
 */
 
 #pragma once
@@ -24,7 +24,6 @@ See license.txt for more information
 
 namespace Mark3
 {
-
 //----------------------------------------------------------------------------
 typedef enum {
     NLFS_FILE_CREATE   = 0x01, //!< Create the file if it does not exist
@@ -36,8 +35,8 @@ typedef enum {
 typedef uint8_t NLFS_File_Mode_t;
 
 //----------------------------------------------------------------------------
-/*!
- * \brief The NLFS_File class
+/**
+ * @brief The NLFS_File class
  *
  * This class contains an implementation of file-level access built on-top of
  * the NLFS filesystem architecture.  An instance of this class represents an
@@ -46,42 +45,42 @@ typedef uint8_t NLFS_File_Mode_t;
 class NLFS_File
 {
 public:
-    /*!
-     * \brief Open  Opens a file from a given filesystem
-     * \param pclFS_ - Pointer to the NLFS filesystem containing the file
-     * \param szPath_ - Path to the file within the NLFS filesystem
-     * \param eMode_ - File open mode
-     * \return 0 on success, -1 on failure
+    /**
+     * @brief Open  Opens a file from a given filesystem
+     * @param pclFS_ - Pointer to the NLFS filesystem containing the file
+     * @param szPath_ - Path to the file within the NLFS filesystem
+     * @param eMode_ - File open mode
+     * @return 0 on success, -1 on failure
      */
     int Open(NLFS* pclFS_, const char* szPath_, NLFS_File_Mode_t eMode_);
 
-    /*!
-     * \brief Read Read bytes from a file into a specified data buffer
-     * \param [in] u32Len_ - Length (in bytes) of data to read
-     * \param [out] pvBuf_ - Pointer to the buffer to read into
-     * \return Number of bytes read from the file
+    /**
+     * @brief Read Read bytes from a file into a specified data buffer
+     * @param [in] u32Len_ - Length (in bytes) of data to read
+     * @param [out] pvBuf_ - Pointer to the buffer to read into
+     * @return Number of bytes read from the file
      */
     int Read(void* pvBuf_, uint32_t u32Len_);
 
-    /*!
-     * \brief Write Write a specified blob of data to the file
-     * \param [in] u32Len_ - Length (in bytes) of the source buffer
-     * \param [in] pvBuf_ - Pointer to the data buffer containing the data to
+    /**
+     * @brief Write Write a specified blob of data to the file
+     * @param [in] u32Len_ - Length (in bytes) of the source buffer
+     * @param [in] pvBuf_ - Pointer to the data buffer containing the data to
      *                      be written
-     * \return Number of bytes written to the file
+     * @return Number of bytes written to the file
      */
     int Write(void* pvBuf_, uint32_t u32Len_);
 
-    /*!
-     * \brief Seek Seek to the specified byte offset within the file
-     * \param [in] u32Offset_ Offset in bytes from the beginning of the file
-     * \return 0 on success, -1 on failure
+    /**
+     * @brief Seek Seek to the specified byte offset within the file
+     * @param [in] u32Offset_ Offset in bytes from the beginning of the file
+     * @return 0 on success, -1 on failure
      */
     int Seek(uint32_t u32Offset_);
 
-    /*!
-     * \brief Close Is used to close an open file buffer
-     * \return 0 on success, -1 on failure.
+    /**
+     * @brief Close Is used to close an open file buffer
+     * @return 0 on success, -1 on failure.
      */
     int Close(void);
 
@@ -94,4 +93,4 @@ private:
     NLFS_Node_t      m_stNode;          //!< Local copy of the file node
 };
 
-} //namespace Mark3
+} // namespace Mark3
